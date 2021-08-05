@@ -71,7 +71,6 @@
 
 <script>
   import router from '../router';
-
   export default {
     name: 'Home',
     data: () => ({
@@ -90,16 +89,12 @@
       viewStocks() {
         router.push('/stock-list');
       },
-      
       getUser() {
         if (localStorage.getItem("isAuthenticates")
           && JSON.parse(localStorage.getItem("isAuthenticates")) === true) {
           this.validUserName = JSON.parse(localStorage.getItem("log_user"));
         }
       }
-
-
-
     }
   }
 </script>

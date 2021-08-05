@@ -10,7 +10,7 @@
         :value="true"
         type="error"
       >
-            Please verify Customer information.
+            Please verify Stock information.
       </v-alert>
        </v-flex>
          </v-layout>
@@ -27,52 +27,51 @@
             <v-form ref="form" lazy-validation>
               <v-container>
 
+
                 <v-text-field
-                  v-model="customer.cust_number"
+                  v-model="stock.cust_number"
                   label="Customer Number"
                   required
                   type="number"
                 />
-
                 <v-text-field
-                  v-model="customer.name"
+                  v-model="stock.customer"
+                  label="Customer"
+                  required
+                  type="number"
+                />
+                <v-text-field
+                  v-model="stock.symbol"
+                  label="Symbol"
+                  required
+                />
+                <v-text-field
+                  v-model="stock.name"
                   label="Name"
                   required
                 />
                 <v-text-field
-                  v-model="customer.address"
-                  label="Address"
+                  v-model="stock.shares"
+                  label="Shares"
                   required
+                  type="number"
                 />
                 <v-text-field
-                  v-model="customer.city"
-                  label="City"
+                  v-model="stock.purchase_price"
+                  label="Purchase Price"
                   required
-                />
+                  type="number"
+                  />
                 <v-text-field
-                  v-model="customer.state"
-                  label="State"
+                  v-model="stock.purchase_date"
+                  label="Purchase Date"
                   required
-                />
-                <v-text-field
-                  v-model="customer.zipcode"
-                  label="ZipCode"
-                  required
-                />
-                <v-text-field
-                  v-model="customer.email"
-                  label="Email"
-                  required
-                />
-                <v-text-field
-                  v-model="customer.cell_phone"
-                  label="Phone"
-                  required
+                  type="date"
                 />
 
               </v-container>
-              <v-btn v-if="!isUpdate" class="blue white--text" @click="createCustomer">Save</v-btn>
-              <v-btn v-if="isUpdate" class="blue white--text" @click="updateCustomer">Update</v-btn>
+              <v-btn v-if="!isUpdate" class="blue white--text" @click="createStock">Save</v-btn>
+              <v-btn v-if="isUpdate" class="blue white--text" @click="updateStock">Update</v-btn>
               <v-btn class="white black--text" @click="cancelOperation">Cancel</v-btn>
 
 
@@ -89,25 +88,26 @@
   import router from '../router';
   import {APIService} from '../http/APIService';
   const apiService = new APIService();
+
   export default {
-    name: 'CustomerCreate',
+    name: 'StockCreate',
     components: {},
     data() {
       return {
         showError: false,
-        customer: {},
-        pageTitle: "Add New Customer",
+        stock: {},
+        pageTitle: "Add New Stock",
         isUpdate: false,
         showMsg: '',
       };
     },
     methods: {
-      createCustomer() {
-        apiService.addNewCustomer(this.customer).then(response => {
+      createStock() {
+        apiService.addNewStock(this.stock).then(response => {
           if (response.status === 201) {
-            this.customer = response.data;
+            this.stock = response.data;
              this.showMsg = "";
-            router.push('/customer-list/new');
+            router.push('/stock-list/new');
           }else{
               this.showMsg = "error";
           }
@@ -120,13 +120,13 @@
         });
       },
       cancelOperation(){
-         router.push("/customer-list");
+         router.push("/stock-list");
       },
-      updateCustomer() {
-        apiService.updateCustomer(this.customer).then(response => {
+      updateStock() {
+        apiService.updateStock(this.stock).then(response => {
           if (response.status === 200) {
-            this.customer = response.data;
-            router.push('/customer-list/update');
+            this.stock = response.data;
+            router.push('/stock-list/update');
           }else{
               this.showMsg = "error";
           }
@@ -141,10 +141,10 @@
     },
     mounted() {
       if (this.$route.params.pk) {
-        this.pageTitle = "Edit Customer";
+        this.pageTitle = "Edit Stock";
         this.isUpdate = true;
-        apiService.getCustomer(this.$route.params.pk).then(response => {
-          this.customer = response.data;
+        apiService.getStock(this.$route.params.pk).then(response => {
+          this.stock = response.data;
         }).catch(error => {
           if (error.response.status === 401) {
             router.push("/auth");

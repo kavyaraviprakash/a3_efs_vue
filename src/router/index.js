@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import HelloWorld from '@/components/HelloWorld'
 import Home from '@/components/Home'
 import Auth from '@/components/Auth'
 import CustomerList from '@/components/CustomerList'
@@ -8,7 +9,6 @@ import InvestmentList from '@/components/InvestmentList'
 import InvestmentCreate from '@/components/InvestmentCreate'
 import StockCreate from '@/components/StockCreate'
 import StockList from '@/components/StockList'
-
 
 Vue.use(Router)
 
@@ -26,7 +26,7 @@ export default new Router({
       name: 'CustomerList',
       component: CustomerList
     },
-    {
+     {
       path: '/customer-list/:msg',
       name: 'CustomerUpdatedList',
       component: CustomerList
@@ -40,7 +40,8 @@ export default new Router({
       path: '/customer-create/:pk',
       name: 'CustomerUpdate',
       component: CustomerCreate
-    }, {
+    },
+    {
       path: '/investment-list',
       name: 'InvestmentList',
       component: InvestmentList
@@ -87,4 +88,3 @@ export default new Router({
     }
   ]
 })
-
